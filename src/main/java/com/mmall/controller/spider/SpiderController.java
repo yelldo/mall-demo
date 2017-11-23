@@ -18,6 +18,12 @@ import us.codecraft.webmagic.Spider;
 @RequestMapping("/spider/")
 public class SpiderController extends ParentController {
 
+    @RequestMapping(value = "testInit.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> testInit(){
+        return ServerResponse.createBySuccessMessage("init success! ...");
+    }
+
     @RequestMapping(value = "sinaBlogProcessor.do",method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<String> sinaBlogProcessor(){
