@@ -67,10 +67,10 @@
         #{id,jdbcType=BIGINT},
       </if>
       <if test="createTime != null" >
-        #{now(),jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
-        #{now(),jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
