@@ -1,4 +1,4 @@
-package com.spider.demo;
+package com.mmall.spider.processor;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -8,7 +8,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 /**
  * Created by tianhc on 2017/11/20.
  */
-public class SinaBlogProcessor implements PageProcessor {
+public class SinaBlog implements PageProcessor {
 
     public static final String URL_LIST = "http://blog\\.sina\\.com\\.cn/s/articlelist_1487828712_0_\\d+\\.html";
 
@@ -42,7 +42,7 @@ public class SinaBlogProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Spider.create(new SinaBlogProcessor())
+        Spider.create(new SinaBlog())
                 .addUrl("http://blog.sina.com.cn/s/articlelist_1487828712_0_1.html")
                 //.addPipeline(new JsonFilePipeline("D:\\webmagic\\"))
                 //.addPipeline(new JsonFilePipeline("E:\\git_download\\Crawler_Projects"))

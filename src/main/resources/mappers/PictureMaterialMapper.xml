@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mmall.dao.PictureMaterialMapper" >
+  <resultMap id="BaseResultMap" type="com.mmall.pojo.PictureMaterial" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="createTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="updateTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="description" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="imgUri" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="imgUriOrigin" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sourceUrl" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, createTime, updateTime, title, description, imgUri, imgUriOrigin, sourceUrl
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_picture_material
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_picture_material
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mmall.pojo.PictureMaterial" >
+    insert into t_picture_material (id, createTime, updateTime, 
+      title, description, imgUri, 
+      imgUriOrigin, sourceUrl)
+    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{imgUri,jdbcType=VARCHAR}, 
+      #{imgUriOrigin,jdbcType=VARCHAR}, #{sourceUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mmall.pojo.PictureMaterial" >
+    insert into t_picture_material
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="updateTime != null" >
+        updateTime,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="imgUri != null" >
+        imgUri,
+      </if>
+      <if test="imgUriOrigin != null" >
+        imgUriOrigin,
+      </if>
+      <if test="sourceUrl != null" >
+        sourceUrl,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{now(),jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{now(),jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUri != null" >
+        #{imgUri,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUriOrigin != null" >
+        #{imgUriOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceUrl != null" >
+        #{sourceUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mmall.pojo.PictureMaterial" >
+    update t_picture_material
+    <set >
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUri != null" >
+        imgUri = #{imgUri,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUriOrigin != null" >
+        imgUriOrigin = #{imgUriOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceUrl != null" >
+        sourceUrl = #{sourceUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.PictureMaterial" >
+    update t_picture_material
+    set createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      imgUri = #{imgUri,jdbcType=VARCHAR},
+      imgUriOrigin = #{imgUriOrigin,jdbcType=VARCHAR},
+      sourceUrl = #{sourceUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

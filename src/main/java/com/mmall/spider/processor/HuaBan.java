@@ -1,4 +1,4 @@
-package com.spider.demo;
+package com.mmall.spider.processor;
 
 /**
  * Created by tianhc on 2017/11/20.
@@ -17,7 +17,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
  * Date: 13-7-26 <br>
  * Time: 下午4:08 <br>
  */
-public class HuaBanProcessor implements PageProcessor {
+public class HuaBan implements PageProcessor {
 
     private Site site;
 
@@ -40,7 +40,7 @@ public class HuaBanProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Spider.create(new HuaBanProcessor()).thread(5)
+        Spider.create(new HuaBan()).thread(5)
                 //.addPipeline(new FilePipeline("/data/webmagic/test/"))
                 //.addPipeline(new FilePipeline("E:\\git_download\\Crawler_Projects"))// yelldo
                 //.setDownloader(new SeleniumDownloader("/Users/yihua/Downloads/chromedriver"))

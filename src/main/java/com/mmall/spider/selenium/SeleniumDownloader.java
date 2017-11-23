@@ -1,4 +1,4 @@
-package com.spider.selenium;
+package com.mmall.spider.selenium;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
