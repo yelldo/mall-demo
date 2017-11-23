@@ -22,6 +22,7 @@ import java.util.List;
 public class Dappei implements PageProcessor {
 
     private PictureMaterialMapper pictureMaterialMapper = (PictureMaterialMapper) SpringContextUtil.getBean("pictureMaterialMapper");
+    //private PictureMaterial2Mapper pictureMaterialMapper = (PictureMaterial2Mapper) SpringContextUtil.getBean("pictureMaterial2Mapper");
 
     private Site site = Site.me().setDomain("dappei.com").setSleepTime(3000).setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_2) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.65 Safari/537.31");
 
@@ -50,6 +51,7 @@ public class Dappei implements PageProcessor {
         // 图片详情页
         if (page.getUrl().regex(IMG_INFO).match()) {
             PictureMaterial pictureMaterial = new PictureMaterial();
+            //PictureMaterial2 pictureMaterial = new PictureMaterial2();
             pictureMaterial.setTitle(page.getHtml().xpath("//div[@class='title']/h1/text()").get());
             JSONObject info = new JSONObject();
             // 标签
