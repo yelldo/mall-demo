@@ -49,4 +49,14 @@ public class SpiderController extends ParentController {
                 .runAsync();
         return ServerResponse.createBySuccessMessage("dappeiProcessor started ...");
     }
+
+    @RequestMapping(value = "dappeiProcessor2.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> dappeiProcessor2(){
+        Spider.create(new Dappei())
+                .addUrl("https://dappei.com/photos?category=female&order=id&page=1")
+                .thread(5)
+                .runAsync();
+        return ServerResponse.createBySuccessMessage("dappeiProcessor2 started ...");
+    }
 }
