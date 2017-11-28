@@ -61,7 +61,9 @@ public class SpiderController extends ParentController {
     public ServerResponse<String> dappeiProcessor2(){
         Spider.create(new Dappei())
                 .addUrl("https://dappei.com/photos?category=female&order=id&page=1")
-                .thread(5)
+                //.setScheduler(new FileCacheQueueScheduler("E:\\git_download\\Crawler_Projects"))
+                .thread(10)
+                //.run();
                 .runAsync();
         return ServerResponse.createBySuccessMessage("dappeiProcessor2 started ...");
     }
