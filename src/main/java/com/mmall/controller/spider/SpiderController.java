@@ -3,6 +3,7 @@ package com.mmall.controller.spider;
 import com.mmall.common.ServerResponse;
 import com.mmall.controller.common.ParentController;
 import com.mmall.spider.processor.Dappei;
+import com.mmall.spider.processor.DappeiByPage;
 import com.mmall.spider.processor.DouBanChuanZhuo;
 import com.mmall.spider.processor.SinaBlog;
 import org.springframework.stereotype.Controller;
@@ -56,6 +57,7 @@ public class SpiderController extends ParentController {
         return ServerResponse.createBySuccessMessage("dappeiProcessor started ...");
     }
 
+    // 这个比较失败，出现很多read timed out 的请求
     @RequestMapping(value = "dappeiProcessor2.do",method = RequestMethod.GET)
     @ResponseBody
     public ServerResponse<String> dappeiProcessor2(){
@@ -66,5 +68,45 @@ public class SpiderController extends ParentController {
                 //.run();
                 .runAsync();
         return ServerResponse.createBySuccessMessage("dappeiProcessor2 started ...");
+    }
+
+    @RequestMapping(value = "dappeiProcessorByPage.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> dappeiProcessorByPage(){
+        Spider.create(new DappeiByPage(200,1))
+                .addUrl("https://dappei.com/photos?category=female&order=id&page=1")
+                .thread(5)
+                .runAsync();
+        Spider.create(new DappeiByPage(200,201))
+                .addUrl("https://dappei.com/photos?category=female&order=id&page=201")
+                .thread(5)
+                .runAsync();
+        Spider.create(new DappeiByPage(200,401))
+                .addUrl("https://dappei.com/photos?category=female&order=id&page=401")
+                .thread(5)
+                .runAsync();
+        return ServerResponse.createBySuccessMessage("dappeiProcessorByPage started ...");
+    }
+
+    @RequestMapping(value = "dappeiProcessorByPage2.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> dappeiProcessorByPage2(){
+        Spider.create(new DappeiByPage(200,601))
+                .addUrl("https://dappei.com/photos?category=female&order=id&page=601")
+                .thread(5)
+                .runAsync();
+        Spider.create(new DappeiByPage(200,801))
+                .addUrl("https://dappei.com/photos?category=female&order=id&page=801")
+                .thread(5)
+                .runAsync();
+        Spider.create(new DappeiByPage(200,1001))
+                .addUrl("https://dappei.com/photos?category=female&order=id&page=1001")
+                .thread(5)
+                .runAsync();
+        Spider.create(new DappeiByPage(50,1201))
+                .addUrl("https://dappei.com/photos?category=female&order=id&page=1201")
+                .thread(5)
+                .runAsync();
+        return ServerResponse.createBySuccessMessage("dappeiProcessorByPage2 started ...");
     }
 }
