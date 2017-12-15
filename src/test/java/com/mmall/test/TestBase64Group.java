@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
 /**
  * Created by geely
  */
-public class Base64GroupTest {
+public class TestBase64Group {
     // 加密
     public static String getBase64(String str) {
         byte[] b = null;

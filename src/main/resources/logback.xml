@@ -6,7 +6,8 @@
             <pattern>[%d{HH:mm:ss.SSS}][%p][%c{40}][%t] %m%n</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>DEBUG</level>
+            <!--<level>DEBUG</level>-->
+            <level>INFO</level>
         </filter>
     </appender>
 
@@ -52,7 +53,8 @@
 
     <!-- geelynote mybatis log 日志 -->
 
-    <logger name="com.mmall.dao" level="DEBUG"/>
+    <!--<logger name="com.mmall.dao" level="DEBUG"/>-->
+    <logger name="com.mmall.dao" level="INFO"/>
 
     <!--<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" >-->
         <!--<appender-ref ref="console"/>-->
@@ -69,8 +71,9 @@
         <!--<appender-ref ref="console"/>-->
     <!--</logger>-->
 
-
-    <root level="DEBUG">
+    <!--这里把控制台打印的日志级别从DEBUG上升到INFO，要不然控制台密密麻麻的，想看的内容都被冲掉了-->
+    <!--<root level="DEBUG">-->
+    <root level="INFO">
         <appender-ref ref="console"/>
         <appender-ref ref="error"/>
     </root>

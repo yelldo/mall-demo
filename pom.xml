@@ -19,7 +19,56 @@
   </properties>
 
   <dependencies>
-    <!--爬虫依赖-->
+    <!--搜索： maven中，编译时依赖和运行时依赖的区别 （compile and runtime）-->
+    <!--放在第一个位置也可以解决jar包冲突的问题，让maven先建立这个依赖，因为jsonpath是个runtime依赖（运行时依赖）
+        这个是临时的奇技淫巧，最好的做法是知道哪里冲突了，在它的前面加上这个依赖就好了-->
+    <!--把jsonpath换成json-path-assert：
+      解决了spring-test中 mockmvc中jsonpath使用报错，错误如下描述：
+        <p>
+          java.lang.NoSuchMethodError: com.jayway.jsonpath.JsonPath.compile(Ljava/lang/String;[Lcom/jayway/jsonpath/Filter;)Lcom/jayway/jsonpath/JsonPath;
+        </p>
+      说明：
+        <p>没有使用正确的jar，虽然jar中都有同样的类，但是其中的api是不一样的，
+          这里就引申出另一个疑问： 在maven依赖中添加springframework后，还需要手动额外添加相应工程中其所需要的其他依赖吗？为什么这么大，
+          这么优秀的框架，没有做这部分，还是说这个本来就是没办法做到的，可能会引起conflict？</p>-->
+    <dependency>
+      <groupId>com.jayway.jsonpath</groupId>
+      <!--<artifactId>json-path</artifactId>
+      <version>2.4.0</version>-->
+      <artifactId>json-path-assert</artifactId>
+      <version>0.9.1</version>
+    </dependency>
+
+    <!--Jest is a Java HTTP Rest client for ElasticSearch-->
+    <dependency>
+      <groupId>io.searchbox</groupId>
+      <artifactId>jest</artifactId>
+      <version>5.3.3</version>
+    </dependency>
+
+    <!-- 中文处理 Han Language Processing -->
+    <dependency>
+      <groupId>com.hankcs</groupId>
+      <artifactId>hanlp</artifactId>
+      <version>portable-1.5.2</version>
+    </dependency>
+    <!-- 中文处理 Han Language Processing end -->
+
+    <dependency>
+      <groupId>org.elasticsearch</groupId>
+      <artifactId>elasticsearch</artifactId>
+      <version>6.0.0</version>
+    </dependency>
+
+    <!-- elasticsearch client 依赖 -->
+    <dependency>
+      <groupId>org.elasticsearch.client</groupId>
+      <artifactId>elasticsearch-rest-client</artifactId>
+      <version>6.0.0</version>
+    </dependency>
+    <!-- elasticsearch client 依赖 end -->
+
+    <!-- 爬虫依赖 -->
     <dependency>
       <groupId>us.codecraft</groupId>
       <artifactId>webmagic-core</artifactId>
@@ -30,11 +79,13 @@
       <artifactId>webmagic-extension</artifactId>
       <version>0.7.3</version>
     </dependency>
+    <!--模拟浏览器，基本上可以模拟任何一个网站的爬取-->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
       <version>2.41.0</version>
     </dependency>
+    <!-- 爬虫依赖 end -->
 
     <dependency>
       <groupId>org.apache.tomcat</groupId>
@@ -70,8 +121,8 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${org.springframework.version}</version>
+      <scope>test</scope>
     </dependency>
-
 
     <dependency>
       <groupId>org.aspectj</groupId>
@@ -96,6 +147,7 @@
       <version>1.6.11</version>
     </dependency>
 
+    <!--jackson是个啥玩意儿？ 好多框架中都会用到的东西？-->
     <dependency>
       <groupId>org.codehaus.jackson</groupId>
       <artifactId>jackson-mapper-asl</artifactId>
@@ -109,7 +161,7 @@
       <!--<scope>runtime</scope>-->
     </dependency>
 
-
+    <!--logback也要去搜索下是个什么玩意儿？ 是专门给mybatis用的日志记录还是其本来就是对其他框架开发的日志记录框架-->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -129,6 +181,7 @@
       <version>5.1.6</version>
     </dependency>
 
+    <!--google.guava好像是比apache还好用的commons工具包，上网google下？-->
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
@@ -194,9 +247,6 @@
       <version>2.0.1</version>
     </dependency>
 
-
-
-
     <!-- mybatis pager -->
 
     <dependency>
@@ -249,6 +299,8 @@
       <artifactId>gson</artifactId>
       <version>2.3.1</version>
     </dependency>
+
+    <!--这个是干嘛用的？ 很好奇，好像spring-test中的mvcmock中的api使用到了这个依赖-->
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest-core</artifactId>
@@ -266,6 +318,40 @@
   <build>
     <finalName>mmall</finalName>
     <plugins>
+      <!-- In order to avoid version conflicts, the dependencies can be shaded and packaged within the client in a single JAR file  -->
+      <!-- 针对于 elasticsearch-rest-client-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.1.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals><goal>shade</goal></goals>
+            <configuration>
+              <relocations>
+                <relocation>
+                  <pattern>org.apache.http</pattern>
+                  <shadedPattern>hidden.org.apache.http</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.apache.logging</pattern>
+                  <shadedPattern>hidden.org.apache.logging</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.apache.commons.codec</pattern>
+                  <shadedPattern>hidden.org.apache.commons.codec</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.apache.commons.logging</pattern>
+                  <shadedPattern>hidden.org.apache.commons.logging</shadedPattern>
+                </relocation>
+              </relocations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.mybatis.generator</groupId>
         <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -292,6 +378,13 @@
     </plugins>
 
   </build>
+  <repositories>
+    <repository>
+      <id>sonatype</id>
+      <name>Sonatype Groups</name>
+      <url>https://oss.sonatype.org/content/groups/public/</url>
+    </repository>
+  </repositories>
 
 
 </project>

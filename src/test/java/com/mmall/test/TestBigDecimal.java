@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 
 
-public class BigDecimalTest {
+public class TestBigDecimal {
 
     @Test
     public void test1(){

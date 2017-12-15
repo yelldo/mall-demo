@@ -23,6 +23,10 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!--需要随着web容器开启而开启的资源 使用servlet 和 listener 都是可以的，原理一样-->
+    <listener>
+        <listener-class>com.mmall.init.StartInit</listener-class>
+    </listener>
 
     <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
@@ -43,9 +47,6 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
-
-
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.do</url-pattern>

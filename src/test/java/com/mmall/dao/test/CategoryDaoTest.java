@@ -3,7 +3,7 @@ package com.mmall.dao.test;
 import com.mmall.dao.CategoryMapper;
 import com.mmall.pojo.Category;
 import com.mmall.service.impl.CategoryServiceImpl;
-import com.mmall.test.TestBase;
+import com.mmall.base.TestBase;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
