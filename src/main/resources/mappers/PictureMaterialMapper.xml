@@ -31,6 +31,11 @@
     <select id="selectByLimit" resultType="com.mmall.pojo.PictureMaterial" parameterType="map">
     SELECT * FROM t_picture_material limit #{start,jdbcType=BIGINT},#{limit,jdbcType=INTEGER}
     </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from t_picture_material
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_picture_material

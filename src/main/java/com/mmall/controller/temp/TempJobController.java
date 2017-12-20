@@ -3,6 +3,7 @@ package com.mmall.controller.temp;
 import com.hankcs.hanlp.HanLP;
 import com.mmall.common.ServerResponse;
 import com.mmall.controller.common.ParentController;
+import com.mmall.service.tempjob.ElasticsearchService;
 import com.mmall.service.tempjob.HanConvertService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,8 @@ public class TempJobController extends ParentController {
 
     @Resource
     private HanConvertService hanConvertService;
+    @Resource
+    private ElasticsearchService elasticsearchService;
 
     @RequestMapping(value = "testInit.do",method = RequestMethod.GET)
     @ResponseBody
@@ -40,6 +43,14 @@ public class TempJobController extends ParentController {
         hanConvertService.updateBathc0(25000, 100);
         return ServerResponse.createBySuccessMessage("hanConvertToSimple ! ...");
     }
+
+    @RequestMapping(value = "dumpDataToElasticsearch.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> dumpDataToElasticsearch(){
+        elasticsearchService.dumpDataJob();
+        return ServerResponse.createBySuccessMessage("dumpDataToElasticsearch ! ...");
+    }
+
 
     public static void main(String[] args) {
         //System.out.println(HanLP.convertToTraditionalChinese("用笔记本电脑写程序"));

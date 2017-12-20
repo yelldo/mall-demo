@@ -10,7 +10,6 @@ import io.searchbox.core.*;
 import io.searchbox.indices.CreateIndex;
 import io.searchbox.indices.mapping.PutMapping;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Controller;
@@ -180,13 +179,4 @@ public class JestTestController extends TestControllerBase {
         JSONObject extraResult = result.getSourceAsObject(JSONObject.class);
         return ServerResponse.createBySuccessMessage("result: " + result.getJsonString()+ ", extraResult: " + (extraResult == null ? "" : extraResult.toJSONString()));
     }
-
-    public static void main(String[] args) throws IOException {
-        String script = XContentFactory.jsonBuilder()
-                .startObject()
-                .field("doc", new JSONObject().put("views",0))
-                .endObject().toString();
-        System.out.println(script);
-    }
-
 }

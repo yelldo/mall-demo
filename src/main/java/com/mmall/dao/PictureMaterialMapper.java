@@ -28,4 +28,6 @@ public interface PictureMaterialMapper {
     int updateBatchCaseWhen(List<PictureMaterial> list);
 
     long selectCount();
+
+    List<PictureMaterial> selectAll();
 }
